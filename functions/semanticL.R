@@ -319,7 +319,8 @@ get_mds_fits <- function(num_items,
     article_ids <- input_df %>%
       slice(1:num_items) %>%
       select(terms)
-    get_terms <- which(article_ids$terms %in% target_terms)
+    get_terms <- which(target_terms %in% article_ids$terms)
+    #print(get_terms)
     # input_df[1:num_articles,]$index
     temp_term_matrix <- target_vectors[get_terms,]
     mdistance <- cosine(t(temp_term_matrix))

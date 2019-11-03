@@ -88,7 +88,7 @@ server <- function(input, output, session) {
         splitter <- unlist(strsplit(input$target_vectors,split="_"))
         values$target_terms <- sl_data_names[str_detect(names(sl_data),
                                                        paste(splitter[1],"_terms",sep="",collapse=''))]
-        print(values$target_terms)
+        
     })
     
     # MAIN OBSERVE FUNCTION
@@ -109,7 +109,7 @@ server <- function(input, output, session) {
         req(is.null(dim(sim_df)) == FALSE)
         
         # get MDS solution
-         values$mds_SS <- get_mds_fits(num_items = input$num_items,
+         mds_SS <- get_mds_fits(num_items = input$num_items,
                                        num_clusters = input$num_clusters,
                                        input_df = sim_df, 
                                        target_vectors = sl_data[[input$target_vectors]],
@@ -133,9 +133,9 @@ server <- function(input, output, session) {
                 need(is.null(dim(sim_df)) == FALSE,"none")
             )
             
-            ggplot(values$mds_SS, aes(x= X, y= Y,
+            ggplot(mds_SS, aes(x= X, y= Y,
                                       color=as.factor(cluster),
-                                      text=terms,
+                                    #  text=terms,
                                       label=terms))+
                 geom_label_repel(size=4, color= "black",
                                  label.size=0,
